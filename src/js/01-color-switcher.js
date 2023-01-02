@@ -23,6 +23,6 @@ function btnStop() {
     clickStop.disabled = true; 
    clearInterval(randomTimer);
 }
-
+console.log("work...");
 
 
