@@ -1,28 +1,24 @@
 import Notiflix from 'notiflix';
 
 const formDelay = document.querySelector(".form")
-const buttonDelay = document.querySelector("button")
-console.log(buttonDelay);
+formDelay.addEventListener("submit", formDelays)
 
-formDelay.addEventListener("input", formDates);
-buttonDelay.addEventListener("click", formDelays)
-
-const formDate = {}
-
-
-function formDates(e) {
-  formDate[e.target.name] = e.target.value
-}
-let step = 0;
 
 function formDelays (e) {
+    const {
+        elements: { delay, step, amount },
+      } = e.currentTarget;
+    
+      delayValue = Number(delay.value);
+      stepValue = Number(step.value);
+      amountValue = Number(amount.value);
+    
+  
   e.preventDefault();
-   step = Number(formDate.delay)
 
-   for (let i = 1; i < Number(formDate.amount)+1; i++) {
+   for (let i = 1; i <= amountValue; i++) {
   console.log(step);
-    setTimeout(()=>{
-        createPromise(Number(i), step)
+        createPromise(i, delayValue)
         .then(( {position, delay }) => {
             console.log(`✅ Fulfilled promise ${position} in ${delay} ms`);
             Notiflix.Notify.success(`✅ Fulfilled promise ${position} in ${delay} ms`);
@@ -31,25 +27,22 @@ function formDelays (e) {
             console.log(`❌ Rejected promise ${position} in ${delay} ms`);
             Notiflix.Notify.failure(`❌ Rejected promise ${position} in ${delay} ms`);
           });
-    }, step)
-    
-    step+= Number(formDate.step)
+          delayValue += stepValue;
 
    }
+   formDelay.reset();
 }
-
 
 function createPromise(position, delay) {
-    const shouldResolve = Math.random() > 0.3;
-
-    const promise = new Promise((res,rej) => {
-    if (shouldResolve) {
-      res({position,delay})
-    } else {
-     rej({position,delay})
-    }
-    
-      })
-return promise
-}
+    return new Promise((resolve, reject) => {
+      setTimeout(() => {
+        const shouldResolve = Math.random() > 0.3;
+        if (shouldResolve) {
+          resolve({ position, delay });
+        } else {
+          reject({ position, delay });
+        }
+      }, delay);
+    });
+  }
 
