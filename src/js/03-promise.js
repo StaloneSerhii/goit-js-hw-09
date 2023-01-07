@@ -19,7 +19,7 @@ function formDelays (e) {
   e.preventDefault();
    step += Number(formDate.delay)
 for (let i = 1; i < Number(formDate.amount)+1; i++) {
-
+console.log(step);
 const promise = new Promise((resolve, reject) => {
     
     const shouldResolve = Math.random() > 0.3;
