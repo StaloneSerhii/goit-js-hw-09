@@ -17,30 +17,39 @@ let step = 0;
 
 function formDelays (e) {
   e.preventDefault();
-   step += Number(formDate.delay)
-for (let i = 1; i < Number(formDate.amount)+1; i++) {
-console.log(step);
-const promise = new Promise((resolve, reject) => {
+   step = Number(formDate.delay)
+
+   for (let i = 1; i < Number(formDate.amount)+1; i++) {
+  
+    setTimeout(()=>{
+        createPromise(Number(i), step)
+        .then(( {position, delay }) => {
+            console.log(`✅ Fulfilled promise ${position} in ${delay} ms`);
+            Notiflix.Notify.success(`✅ Fulfilled promise ${position} in ${delay} ms`);
+          })
+          .catch(({ position, delay }) => {
+            console.log(`❌ Rejected promise ${position} in ${delay} ms`);
+            Notiflix.Notify.failure(`❌ Rejected promise ${position} in ${delay} ms`);
+          });
+    }, step)
     
+    step+= Number(formDate.step)
+
+   }
+}
+
+
+function createPromise(position, delay) {
     const shouldResolve = Math.random() > 0.3;
-  setTimeout(() => {
+
+    const promise = new Promise((res,rej) => {
     if (shouldResolve) {
-      resolve(i);
+      res({position,delay})
     } else {
-      reject(i);
+     rej({position,delay})
     }
-  }, step);
-});
+    
+      })
+return promise
+}
 
-
-    promise.then(( position, delay ) => {
-        Notiflix.Notify.success(`✅ Fulfilled promise ${position} in ${step} ms`);
-    console.log(`✅ Fulfilled promise ${position} in ${step} ms`)
-  })
- 
-  .catch(( position, delay ) => {
-    Notiflix.Notify.failure(`❌ Rejected promise ${position} in ${step} ms`);
-    console.log(`❌ Rejected promise ${position} in ${step} ms`)
-  })
-  step += Number(formDate.step)
-}}
