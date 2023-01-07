@@ -17,7 +17,7 @@ function formDelays (e) {
   e.preventDefault();
 
    for (let i = 1; i <= amountValue; i++) {
-  console.log(step);
+
         createPromise(i, delayValue)
         .then(( {position, delay }) => {
             console.log(`✅ Fulfilled promise ${position} in ${delay} ms`);
