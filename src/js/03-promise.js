@@ -20,7 +20,7 @@ function formDelays (e) {
    step = Number(formDate.delay)
 
    for (let i = 1; i < Number(formDate.amount)+1; i++) {
-  
+  console.log(step);
     setTimeout(()=>{
         createPromise(Number(i), step)
         .then(( {position, delay }) => {
