@@ -1,5 +1,9 @@
 import Notiflix from 'notiflix';
 
+let delayValue = null;
+let stepValue = null;
+let amountValue = null;
+
 const formDelay = document.querySelector(".form")
 formDelay.addEventListener("submit", formDelays)
 
