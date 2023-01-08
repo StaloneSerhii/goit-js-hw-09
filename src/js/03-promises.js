@@ -45,4 +45,4 @@ function createPromise(position, delay) {
       }, delay);
     });
   }
-
+console.log("f");
